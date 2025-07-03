@@ -2,51 +2,289 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Intro Page</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./style.css" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+      }
+
+      .logo {
+        height: 30px;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .nav-item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .nav-item p {
+        margin: 0;
+      }
+
+      .nav-item img.arrow {
+        width: 10px;
+        margin-left: 5px;
+      }
+
+      .dropdown-list {
+        position: absolute;
+        top: 30px;
+        left: 0;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        display: none;
+        flex-direction: column;
+        padding: 10px;
+        gap: 10px;
+        list-style: none;
+      }
+
+      .dropdown-link a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: black;
+      }
+
+      .dropdown-link img.icon {
+        width: 16px;
+        height: 16px;
+      }
+
+      .button {
+        display: flex;
+        gap: 15px;
+      }
+
+      .registration button {
+        padding: 8px 16px;
+        border-radius: 10px;
+        border: 1px solid black;
+        background-color: white;
+        cursor: pointer;
+      }
+
+      .mobile-menu-icon {
+        display: none;
+        cursor: pointer;
+      }
+
+      .mobile-menu-icon img {
+        width: 24px;
+        height: 24px;
+      }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        display: none;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        z-index: 5;
+      }
+
+      .overlay.active {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .mobile-nav {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 250px;
+        height: 100%;
+        background: white;
+        flex-direction: column;
+        padding: 20px;
+        z-index: 6;
+      }
+
+      @media (max-width: 768px) {
+        nav,
+        .button {
+          display: none;
+        }
+
+        .mobile-menu-icon {
+          display: block;
+        }
+      }
+
+      .main {
+        width: 100%;
+        min-height: 100vh;
+        background: linear-gradient(to bottom right, white, #f9fafb);
+      }
+
+      .container {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+      }
+
+      .grid {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      @media (min-width: 1024px) {
+        .grid {
+          flex-direction: row;
+        }
+      }
+
+      .text-content {
+        text-align: center;
+        order: 2;
+      }
+
+      @media (min-width: 1024px) {
+        .text-content {
+          text-align: left;
+          order: 1;
+          flex: 1;
+        }
+      }
+
+      .text-content h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        color: #111827;
+      }
+
+      @media (min-width: 1024px) {
+        .text-content h1 {
+          font-size: 3.75rem;
+        }
+      }
+
+      .text-content p {
+        font-size: 1.125rem;
+        color: #4b5563;
+        margin-bottom: 2rem;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      @media (min-width: 1024px) {
+        .text-content p {
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+
+      .text-content button {
+        background-color: black;
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 0.75rem;
+        font-weight: 500;
+        cursor: pointer;
+      }
+
+      .clients {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 2rem;
+        justify-content: center;
+      }
+
+      @media (min-width: 1024px) {
+        .clients {
+          justify-content: flex-start;
+        }
+      }
+
+      .clients img {
+        height: 30px;
+        object-fit: contain;
+      }
+
+      .hero-image {
+        order: 1;
+        flex: 1;
+      }
+
+      @media (min-width: 1024px) {
+        .hero-image {
+          order: 2;
+        }
+      }
+
+      .image-wrapper img {
+        width: 100%;
+        max-width: 400px;
+        display: block;
+        margin: 0 auto;
+      }
+
+      footer {
+        text-align: center;
+        padding: 20px;
+      }
+    </style>
   </head>
   <body>
     <header>
       <nav>
-        <img src="./assets/images/logo.svg" alt="snap's logo" class="logo" />
+        <img src="./public/logo.svg" alt="snap's logo" class="logo" />
         <div class="nav-item">
           <p class="nav-link">Features</p>
-          <img src="./assets/images/icon-arrow-down.svg" alt="arrow down icon" class="arrow" />
+          <img src="./public/icon-arrow-down.svg" alt="arrow down icon" class="arrow" />
           <ul class="dropdown-list">
             <li class="dropdown-link">
               <a href="#" aria-label="todo-list">
-                <img src="./assets/images/icon-todo.svg" alt="Todo icon" class="icon" />
+                <img src="./public/icon-todo.svg" alt="Todo icon" class="icon" />
                 Todo List
               </a>
             </li>
             <li class="dropdown-link">
-              <a href="#">
-                <img src="./assets/images/icon-calendar.svg" alt="Calendar icon" class="icon" />
-                Calendar
-              </a>
+              <a href="#"><img src="./public/icon-calendar.svg" alt="Calendar icon" class="icon" /> Calendar</a>
             </li>
             <li class="dropdown-link">
-              <a href="#">
-                <img src="./assets/images/icon-reminders.svg" alt="Reminders icon" class="icon" />
-                Reminders
-              </a>
+              <a href="#"><img src="./public/icon-reminders.svg" alt="Reminders icon" class="icon" /> Reminders</a>
             </li>
             <li class="dropdown-link">
-              <a href="#">
-                <img src="./assets/images/icon-planning.svg" alt="Planning icon" class="icon" />
-                Planning
-              </a>
+              <a href="#"><img src="./public/icon-planning.svg" alt="Planning icon" class="icon" /> Planning</a>
             </li>
           </ul>
         </div>
         <div class="nav-item">
           <p class="nav-link">Company</p>
-          <img src="./assets/images/icon-arrow-down.svg" alt="arrow down icon" class="arrow" />
+          <img src="./public/icon-arrow-down.svg" alt="arrow down icon" class="arrow" />
           <ul class="dropdown-list">
             <li class="dropdown-link"><a href="#">History</a></li>
             <li class="dropdown-link"><a href="#">Our Team</a></li>
@@ -61,8 +299,8 @@
         <button class="register">Register</button>
       </div>
       <div class="mobile-menu-icon">
-        <img src="./assets/images/icon-menu.svg" alt="open menu" class="open-menu" />
-        <img src="./assets/images/icon-close-menu.svg" alt="close menu" class="close-menu" style="display: none" />
+        <img src="./public/icon-menu.svg" alt="open menu" class="open-menu" />
+        <img src="./public/icon-close-menu.svg" alt="close menu" class="close-menu" style="display: none" />
       </div>
     </header>
 
@@ -83,22 +321,20 @@
         <div class="grid">
           <div class="text-content">
             <h1>Make remote work</h1>
-            <p>
-              Get your team in sync, no matter your location. Streamline processes, create team rituals, and watch productivity soar.
-            </p>
+            <p>Get your team in sync, no matter your location. Streamline processes, create team rituals, and watch productivity soar.</p>
             <button>Learn More</button>
             <div class="clients">
-              <img src="./assets/images/client-databiz.svg" alt="Databiz logo" />
-              <img src="./assets/images/client-audiophile.svg" alt="Audiophile logo" />
-              <img src="./assets/images/client-meet.svg" alt="Meet logo" />
-              <img src="./assets/images/client-maker.svg" alt="Maker logo" />
+              <img src="./public/client-databiz.svg" alt="Databiz logo" />
+              <img src="./public/client-audiophile.svg" alt="Audiophile logo" />
+              <img src="./public/client-meet.svg" alt="Meet logo" />
+              <img src="./public/client-maker.svg" alt="Maker logo" />
             </div>
           </div>
           <div class="hero-image">
             <div class="image-wrapper">
               <picture>
-                <source media="(min-width: 768px)" srcset="./assets/images/image-hero-desktop.png" />
-                <img src="./assets/images/image-hero-mobile.png" alt="Remote work illustration" />
+                <source media="(min-width: 768px)" srcset="./public/image-hero-desktop.png" />
+                <img src="./public/image-hero-mobile.png" alt="Remote work illustration" />
               </picture>
             </div>
           </div>
@@ -110,6 +346,48 @@
       Challenge by <a href="https://crio.do" target="_blank">Crio.do</a>.
     </footer>
 
-    <script src="./script.js"></script>
+    <script>
+      const openMenu = document.querySelector(".open-menu");
+      const closeMenu = document.querySelector(".close-menu");
+      const overlay = document.querySelector(".overlay");
+      const mobileNav = document.querySelector(".mobile-nav");
+      const navLinks = document.querySelectorAll(".nav-link");
+
+      openMenu.addEventListener("click", () => {
+        mobileNav.style.display = "block";
+        openMenu.style.display = "none";
+        closeMenu.style.display = "block";
+        overlay.classList.add("active");
+      });
+
+      closeMenu.addEventListener("click", () => {
+        mobileNav.style.display = "none";
+        openMenu.style.display = "block";
+        closeMenu.style.display = "none";
+        overlay.classList.remove("active");
+      });
+
+      navLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          const parent = link.closest(".nav-item");
+          const dropdown = parent.querySelector(".dropdown-list");
+
+          if (link.classList.contains("link-open")) {
+            link.classList.remove("link-open");
+            if (dropdown) dropdown.style.display = "none";
+          } else {
+            navLinks.forEach((l) => {
+              l.classList.remove("link-open");
+              const p = l.closest(".nav-item");
+              const d = p.querySelector(".dropdown-list");
+              if (d) d.style.display = "none";
+            });
+
+            link.classList.add("link-open");
+            if (dropdown) dropdown.style.display = "block";
+          }
+        });
+      });
+    </script>
   </body>
 </html>
