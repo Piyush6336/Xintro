@@ -1,56 +1,48 @@
-// document.addEventListener('DOMContentLoaded', () => {
-//         const navItems = document.querySelectorAll('.nav-item');
+// Select elements
+const openMenu = document.querySelector(".open-menu");
+const closeMenu = document.querySelector(".close-menu");
+const overlay = document.querySelector(".overlay");
+const mobileNav = document.querySelector(".mobile-nav");
+const navLinks = document.querySelectorAll(".nav-link");
 
-//         navItems.forEach(item => {
-//           const dropdown = item.querySelector('.dropdown-list');
-//           if (dropdown) {
-//             item.addEventListener('click', e => {
-//               e.stopPropagation();
-              
-//               document.querySelectorAll('.dropdown-list').forEach(dl => {
-//                 if (dl !== dropdown) dl.classList.remove('show');
-//               });
-//               dropdown.classList.toggle('show');
-//             });
-//           }
-//         });
+// Mobile menu open
+openMenu.addEventListener("click", () => {
+  mobileNav.style.display = "block";
+  openMenu.style.display = "none";
+  closeMenu.style.display = "block";
+  overlay.classList.add("active");
+});
 
-//         document.addEventListener('click', () => {
-//           document.querySelectorAll('.dropdown-list').forEach(dl => dl.classList.remove('show'));
-//         });
-//       });
-document.addEventListener('DOMContentLoaded', () => {
-  const navItems = document.querySelectorAll('.nav-item');
+// Mobile menu close
+closeMenu.addEventListener("click", () => {
+  mobileNav.style.display = "none";
+  openMenu.style.display = "block";
+  closeMenu.style.display = "none";
+  overlay.classList.remove("active");
+});
 
-  navItems.forEach(item => {
-    const dropdown = item.querySelector('.dropdown-list');
+// Dropdown toggle
+navLinks.forEach((link) => {
+  link.addEventListener("click", (e) => {
+    const parent = link.closest(".nav-item");
+    const dropdown = parent.querySelector(".dropdown-list");
 
-    if (dropdown) {
-      item.addEventListener('click', e => {
-        e.stopPropagation();
-
-        // Close all other dropdowns
-        document.querySelectorAll('.dropdown-list').forEach(dl => {
-          if (dl !== dropdown) {
-            dl.classList.remove('show');
-          }
-        });
-
-        // Toggle this dropdown
-        dropdown.classList.toggle('show');
+    // If already open, close it
+    if (link.classList.contains("link-open")) {
+      link.classList.remove("link-open");
+      if (dropdown) dropdown.style.display = "none";
+    } else {
+      // Close all other dropdowns first
+      navLinks.forEach((l) => {
+        l.classList.remove("link-open");
+        const p = l.closest(".nav-item");
+        const d = p.querySelector(".dropdown-list");
+        if (d) d.style.display = "none";
       });
+
+      // Open this one
+      link.classList.add("link-open");
+      if (dropdown) dropdown.style.display = "block";
     }
-  });
-
-  // When clicking anywhere else, close all
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.dropdown-list').forEach(dl => dl.classList.remove('show'));
-  });
-
-  // Prevent closing dropdown when clicking inside a dropdown-list
-  document.querySelectorAll('.dropdown-list').forEach(dl => {
-    dl.addEventListener('click', e => {
-      e.stopPropagation();
-    });
   });
 });
