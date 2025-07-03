@@ -97,10 +97,13 @@ nav {
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 5;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .overlay.active {
   display: block;
+  opacity: 1;
 }
 
 .mobile-nav {
@@ -125,6 +128,7 @@ nav {
   .button {
     display: none;
   }
+
   .mobile-menu-icon {
     display: block;
   }

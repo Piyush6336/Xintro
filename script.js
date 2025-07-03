@@ -1,36 +1,27 @@
-document.querySelectorAll(".nav-link").forEach(link => {
-  link.addEventListener("click", () => {
-    const parent = link.parentElement;
-    const dropdown = parent.querySelector(".dropdown-list");
-    const arrow = parent.querySelector(".arrow");
+document.querySelector(".open-menu").addEventListener("click", () => {
+  document.querySelector(".overlay").classList.add("active");
+  document.querySelector(".mobile-nav").classList.add("show");
+  document.querySelector(".open-menu").style.display = "none";
+  document.querySelector(".close-menu").style.display = "block";
+});
 
-    // Toggle class
-    link.classList.toggle("link-open");
-    dropdown.classList.toggle("show");
+document.querySelector(".close-menu").addEventListener("click", () => {
+  document.querySelector(".overlay").classList.remove("active");
+  document.querySelector(".mobile-nav").classList.remove("show");
+  document.querySelector(".open-menu").style.display = "block";
+  document.querySelector(".close-menu").style.display = "none";
+});
 
-    if (link.classList.contains("link-open")) {
-      arrow.src = "./assets/images/icon-arrow-up.svg";
+// Dropdown toggle
+document.querySelectorAll(".nav-link").forEach((item) => {
+  item.addEventListener("click", () => {
+    const list = item.querySelector(".dropdown-list");
+    if (list.classList.contains("show")) {
+      list.classList.remove("show");
+      item.classList.remove("link-open");
     } else {
-      arrow.src = "./assets/images/icon-arrow-down.svg";
+      list.classList.add("show");
+      item.classList.add("link-open");
     }
   });
-});
-
-const openMenu = document.querySelector(".open-menu");
-const closeMenu = document.querySelector(".close-menu");
-const overlay = document.querySelector(".overlay");
-const mobileNav = document.querySelector(".mobile-nav");
-
-openMenu.addEventListener("click", () => {
-  overlay.classList.add("active");
-  mobileNav.classList.add("show");
-  openMenu.style.display = "none";
-  closeMenu.style.display = "block";
-});
-
-closeMenu.addEventListener("click", () => {
-  overlay.classList.remove("active");
-  mobileNav.classList.remove("show");
-  openMenu.style.display = "block";
-  closeMenu.style.display = "none";
 });
